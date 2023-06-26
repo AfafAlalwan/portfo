@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 import csv
 
 app = Flask(__name__)
@@ -24,6 +24,20 @@ def submit_form():
             data = request.form.to_dict()
             write_to_csv(data)
             return render_template('thank_you.html')
+        except:
+            return render_template('sth_wrong.html')
+    else:
+        return render_template('sth_wrong.html')
+    
+@app.route('/get_cv', methods=['POST', 'GET'])
+def get_cv():
+    if request.method == 'GET':
+        try:
+            response = make_response(open('static\pdf\CV-Afaf-Alalwan.pdf', 'rb').read())
+            response.headers['Content-Type'] = 'application/pdf'
+            response.headers['Content-Disposition'] = 'attachment; filename=CV-AfafAlalwan.pdf'
+
+            return response
         except:
             return render_template('sth_wrong.html')
     else:
