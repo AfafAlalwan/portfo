@@ -1,6 +1,9 @@
 
 from flask import Flask, render_template, request, make_response
 import csv
+import credentials
+import smtplib
+from email.message import EmailMessage
 
 app = Flask(__name__)
 
@@ -17,12 +20,31 @@ def write_to_csv(data):
         csv_writer = csv.writer(database,delimiter=',',quotechar=';',quoting=csv.QUOTE_MINIMAL)
         csv_writer.writerow([name,email,subject,message])
 
+def send_email(data):
+    try:        
+        email = EmailMessage()
+        email['from'] = data['name']
+        email['to'] = credentials.email_receiver
+        email['subject'] = data['subject']
+        message = data['message']
+        contact_email = data['email']
+        email.set_content(f'{message}\n contact email: {contact_email}')
+        with smtplib.SMTP(host='smtp.gmail.com', port=587) as smtp:
+            smtp.ehlo()
+            smtp.starttls() 
+            smtp.login(credentials.email_sender, credentials.password)
+            smtp.send_message(email)
+    except:
+        return render_template('sth_wrong.html')
+
+
 @app.route('/submit_form', methods=['POST', 'GET'])
 def submit_form():
     if request.method == 'POST':
         try:
             data = request.form.to_dict()
             write_to_csv(data)
+            send_email(data)
             return render_template('thank_you.html')
         except:
             return render_template('sth_wrong.html')
@@ -33,7 +55,7 @@ def submit_form():
 def get_cv():
     if request.method == 'GET':
         try:
-            response = make_response(open('/home/afafalwan/portfo/portfo/static/pdf/CV-Afaf-Alalwan.pdf', 'rb').read())
+            response = make_response(open('static\pdf\CV-Afaf-Alalwan.pdf', 'rb').read())
             response.headers['Content-Type'] = 'application/pdf'
             response.headers['Content-Disposition'] = 'attachment; filename=CV-AfafAlalwan.pdf'
 
