@@ -28,9 +28,9 @@ def submit_form():
     else:
         return render_template('sth_wrong.html')
 
-@app.route("/<string:page_name>")
-def html_page(page_name):
-    return render_template(page_name)
+# @app.route("/<string:page_name>")
+# def html_page(page_name):
+#     return render_template(page_name)
 
 
 if __name__ == '__main__':
