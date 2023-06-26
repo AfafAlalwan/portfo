@@ -33,7 +33,7 @@ def submit_form():
 def get_cv():
     if request.method == 'GET':
         try:
-            response = make_response(open('static\pdf\CV-Afaf-Alalwan.pdf', 'rb').read())
+            response = make_response(open('/home/afafalwan/portfo/portfo/static/pdf/CV-Afaf-Alalwan.pdf', 'rb').read())
             response.headers['Content-Type'] = 'application/pdf'
             response.headers['Content-Disposition'] = 'attachment; filename=CV-AfafAlalwan.pdf'
 
