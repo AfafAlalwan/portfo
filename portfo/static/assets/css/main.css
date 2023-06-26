@@ -228,6 +228,13 @@ input, select, textarea {
 			  typing 3.5s steps(40, end),
 			  blink-caret .75s step-end infinite;
 		  }
+
+		  @media screen and (max-width: 736px){
+			.typewriter{
+
+				font-size: 1.8em;
+			}
+		  }
 		  
 		  /* The typing effect */
 		  @keyframes typing {
@@ -1719,7 +1726,16 @@ input, select, textarea {
  @media (min-width: 600px) {
 	 .chocolate-button {
 		 font-size: 40px;
+		 max-width: 8em;
 	}
+
+}
+
+@media screen and (max-width: 736px){
+	.chocolate-button {
+		font-size: 18px;
+		max-width: 8em;
+   }
 }
  .chocolate-button .bar {
 	 border-radius: 0.3em;
@@ -1864,6 +1880,7 @@ input, select, textarea {
 		font-size: 1.1em;
 		max-width: 24em;
 	}
+
 
 		input[type="button"]:hover,
 		input[type="submit"]:hover,
