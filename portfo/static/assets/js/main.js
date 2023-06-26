@@ -1,12 +1,5 @@
 (function($) {
 
-	document.getElementById("contact-form").addEventListener("submit", function(event) {
-		event.preventDefault(); // Prevent form submission
-	  
-		// Show thank you message and hide the form
-		document.getElementById("form-container").style.display = "none";
-		document.getElementById("thank-you-message").style.display = "block";
-	  });
 	
 	const elButton = document.querySelector('.chocolate-button');
 
